@@ -4,7 +4,6 @@ import { VideoStatus, Video } from '../types';
 import {getDB} from '../db';
 import {getExtension} from '../utils';
 import {spawn} from 'child_process';
-import ffmpeg from 'ffmpeg-static';
 
 // Main function, filesystem watcher
 async function runServer() {
@@ -28,6 +27,8 @@ async function runServer() {
 
 }
 
+let isProcessing = false;
+
 // Check and process an MP4 file if it needs to
 // @param filename MP4 file name e.g: '1234-b6a8.mp4'
 async function checkMP4File(filename: string) {
@@ -40,17 +41,22 @@ async function checkMP4File(filename: string) {
 
   const db = await getDB();
   const res: Video = await db.get('SELECT * FROM Videos WHERE uploadId = ?', uploadId);
-  console.log(res)
   if (res.status !== VideoStatus.PENDING || !res.mp4Path || res.hlsPath) {
     return;
   }
-  
-  console.log(`Processing ${filename}`);
+
   const mp4Path = path.join(process.cwd(), res.mp4Path);
   const hlsPath = path.join(process.cwd(), `data/hls/${uploadId}`);
 
+  if (isProcessing) {
+    return;
+  }
+  isProcessing = true;
   await encodeMP4ToHLS(mp4Path, hlsPath);
+  isProcessing = false;
+
 }
+
 
 /**
  * Main transcoding function
@@ -58,6 +64,7 @@ async function checkMP4File(filename: string) {
  * @param hlsPath output directory path e.g: 'data/hls/1234-a5b6'
  */
 async function encodeMP4ToHLS(mp4Path: string, hlsPath: string) {
+  console.log('Transcoding', mp4Path);
 
   // Video encoding in HLS for adaptive bitrate and resolution streaming
   // Reference : https://www.martin-riedl.de/2020/04/17/using-ffmpeg-as-a-hls-streaming-server-overview/
