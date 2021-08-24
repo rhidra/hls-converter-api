@@ -55,7 +55,7 @@ async function checkMP4File(filename: string) {
     }
     check_();
   });
-  
+
   const db = await getDB();
   try {
     // Lock the encoding process
@@ -83,7 +83,7 @@ async function checkMP4File(filename: string) {
 
     // Encoding to HLS
     await encodeMP4ToHLS(mp4Path, hlsPath, encodingSpeed, segmentSize, framerate, streams);
-    
+
     // Unlock encoding process and change the video status to DONE
     await db.run('UPDATE Videos SET status = ? WHERE uploadId = ?', [VideoStatus.DONE, uploadId]);
     isProcessing = false;

@@ -26,6 +26,8 @@ export async function getDB() {
 
 export async function setupDB() {
   await db.exec(`
+    PRAGMA foreign_keys = ON;
+
     DROP TABLE IF EXISTS StreamsQuality;
     DROP TABLE IF EXISTS Videos;
 
@@ -33,7 +35,7 @@ export async function setupDB() {
       uploadId TEXT PRIMARY KEY,
       originalName TEXT,
       status TINYINT NOT NULL DEFAULT ${VideoStatus.NOT_UPLOADED},
-      
+
       encodingSpeed TINYINT NOT NULL DEFAULT ${EncodingSpeed.MEDIUM},
       segmentSize TINYINT NOT NULL DEFAULT 6,
       framerate INTEGER NOT NULL DEFAULT 25
@@ -43,7 +45,7 @@ export async function setupDB() {
       uploadId TEXT,
       stream INTEGER,
       quality TINYINT NOT NULL DEFAULT ${StreamQuality.MOBILE_360P},
-      FOREIGN KEY(uploadId) REFERENCES Videos(uploadId),
+      FOREIGN KEY(uploadId) REFERENCES Videos(uploadId) ON DELETE CASCADE,
       PRIMARY KEY(uploadId, stream)
     );
   `);

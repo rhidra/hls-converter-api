@@ -18,7 +18,7 @@ export function removeExtension(filename: string): string {
 export function getFilePathsRecursiveSync(dir: string) {
 	let results = [] as string[];
 	const list = fs.readdirSync(dir);
-  
+
   let pending = list.length;
 	if (!pending) {
     return results;
@@ -27,7 +27,7 @@ export function getFilePathsRecursiveSync(dir: string) {
 	for (const file of list) {
 		const fullPath = path.resolve(dir, file)
 		const stat = fs.statSync(fullPath)
-    
+
     if (stat && stat.isDirectory()) {
 			const res = getFilePathsRecursiveSync(fullPath)
 			results = results.concat(res)
@@ -43,14 +43,14 @@ export function getFilePathsRecursiveSync(dir: string) {
 }
 
 export async function getZippedFolderSync(dir: string) {
-	let allPaths = getFilePathsRecursiveSync(dir);
+	const allPaths = getFilePathsRecursiveSync(dir);
 
-	let zip = new JSZip();
+	const zip = new JSZip();
   for (const filePath of allPaths) {
-    let addPath = path.relative(dir, filePath);
-    let data = fs.readFileSync(filePath);
+    const addPath = path.relative(dir, filePath);
+    const data = fs.readFileSync(filePath);
     zip.file(addPath, data);
   }
-  
+
   return await zip.generateAsync({type: "nodebuffer"});
 }

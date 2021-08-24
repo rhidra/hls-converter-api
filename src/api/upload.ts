@@ -24,9 +24,9 @@ router.get('/', (req, res) => res.sendStatus(200));
  * Reply with an upload ID which should be later used for further requests.
  * The upload ID defines the encoding process for one video file.
  * Input body: {
- *  encodingSpeed: {0, 1 or 2} (default: 1), 
- *  segmentSize: integer (default: 6), 
- *  framerate: integer (default: 25), 
+ *  encodingSpeed: {0, 1 or 2} (default: 1),
+ *  segmentSize: integer (default: 6),
+ *  framerate: integer (default: 25),
  *  streams: {0, 1, 2, 3, 4, or 5}[] (default: [0]),
  * }
  * Output: {uploadId}
@@ -41,11 +41,11 @@ router.post('/request', bodyParser.json(), async (req, res) => {
 
   // Create the video object
   await db.run(`
-    INSERT INTO Videos (uploadId, encodingSpeed, segmentSize, framerate) 
+    INSERT INTO Videos (uploadId, encodingSpeed, segmentSize, framerate)
     VALUES (?, ?, ?, ?)`, [uploadId, encodingSpeed, segmentSize, framerate]
   );
 
-  // Create the streams quality 
+  // Create the streams quality
   await Promise.all(streams.map((q, i) => db.run(`
     INSERT INTO StreamsQuality (uploadId, stream, quality)
     VALUES (?, ?, ?)`, [uploadId, i, Math.max(0, q)]
@@ -114,7 +114,7 @@ router.post('/upload/:uploadId', upload.single('media'), async (req, res) => {
       originalName = ?
     WHERE uploadId = ?`,
     [req.file.originalname, uploadId]);
-  
+
   // Write the file to the disk
   fs.writeFileSync(fileMP4Path, req.file.buffer);
 
