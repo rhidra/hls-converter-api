@@ -30,10 +30,10 @@ export enum EncodingSpeed {
 };
 
 export enum StreamQuality {
-  HD_1080P = 0,
-  HD_720P = 1,
-  SD_540P = 2,
-  SD_480P = 3,
-  MOBILE_360P = 4,
-  MOBILE_240P = 5,
+  MOBILE_240P = 0,
+  MOBILE_360P = 1,
+  SD_480P = 2,
+  SD_540P = 3,
+  HD_720P = 4,
+  HD_1080P = 5,
 }

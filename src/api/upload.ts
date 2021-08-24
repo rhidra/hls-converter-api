@@ -4,7 +4,8 @@ import multer from 'multer';
 import { getDB } from '../db';
 import {getExtension} from '../utils';
 import fs from 'fs';
-import { Video, VideoStatus } from '../types';
+import bodyParser from 'body-parser';
+import { EncodingSpeed, Video, VideoStatus } from '../types';
 
 const router = Router();
 const upload = multer({});
@@ -19,16 +20,38 @@ router.get('/', (req, res) => res.sendStatus(200));
 /**
  * POST /api/request
  *
- * Register a future video upload.
+ * Register a future video upload, with the encoding settings.
  * Reply with an upload ID which should be later used for further requests.
  * The upload ID defines the encoding process for one video file.
+ * Input body: {
+ *  encodingSpeed: {0, 1 or 2} (default: 1), 
+ *  segmentSize: integer (default: 6), 
+ *  framerate: integer (default: 25), 
+ *  streams: {0, 1, 2, 3, 4, or 5}[] (default: [0]),
+ * }
  * Output: {uploadId}
  */
-router.post('/request', async (req, res) => {
+router.post('/request', bodyParser.json(), async (req, res) => {
   const db = await getDB();
-  const id = uuidv4();
-  await db.run('INSERT INTO Videos (uploadId) VALUES (?)', id);
-  res.json({uploadId: id});
+  const uploadId = uuidv4();
+  const encodingSpeed: EncodingSpeed = req.body.encodingSpeed ?? EncodingSpeed.MEDIUM;
+  const segmentSize = req.body.segmentSize ?? 6;
+  const framerate = req.body.framerate ?? 25;
+  const streams: number[] = req.body.streams ?? [0];
+
+  // Create the video object
+  await db.run(`
+    INSERT INTO Videos (uploadId, encodingSpeed, segmentSize, framerate) 
+    VALUES (?, ?, ?, ?)`, [uploadId, encodingSpeed, segmentSize, framerate]
+  );
+
+  // Create the streams quality 
+  await Promise.all(streams.map((q, i) => db.run(`
+    INSERT INTO StreamsQuality (uploadId, stream, quality)
+    VALUES (?, ?, ?)`, [uploadId, i, Math.max(0, q)]
+  )));
+
+  res.json({uploadId});
 });
 
 /**

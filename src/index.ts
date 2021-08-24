@@ -23,8 +23,9 @@ sqlite3.verbose();
 
   app.get("/videos", async (req, res) => {
     try {
-      const rows = await db.all(`SELECT * FROM Videos;`);
-      res.send(rows);
+      const videos = await db.all(`SELECT * FROM Videos;`);
+      const streams = await db.all(`SELECT * FROM StreamsQuality;`);
+      res.send({videos, streams});
     } catch (err) {
       res.status(500).send('DB error: Unable to select columns of the table');
     }
