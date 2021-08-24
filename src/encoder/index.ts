@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { VideoStatus, Video } from '../types';
+import { VideoStatus, Video, StreamQuality, EncodingSpeed, StreamQualityElement } from '../types';
 import {getDB} from '../db';
 import {getExtension, removeExtension} from '../utils';
 import {spawn} from 'child_process';
@@ -62,8 +62,8 @@ async function checkMP4File(filename: string) {
     isProcessing = true;
 
     // Check if the video status is valid for encoding
-    const res: Video = await db.get('SELECT * FROM Videos WHERE uploadId = ?', uploadId);
-    if (res.status !== VideoStatus.PENDING && res.status !== VideoStatus.ENCODING) {
+    const video: Video = await db.get('SELECT * FROM Videos WHERE uploadId = ?', uploadId);
+    if (video.status !== VideoStatus.PENDING && video.status !== VideoStatus.ENCODING) {
       isProcessing = false;
       return;
     }
@@ -72,12 +72,17 @@ async function checkMP4File(filename: string) {
     console.log(`Change video status of ${uploadId} to ENCODING`)
     await db.run('UPDATE Videos SET status = ? WHERE uploadId = ?', [VideoStatus.ENCODING, uploadId]);
 
-    // File paths
+    // Encoding inputs
     const mp4Path = path.join(process.cwd(), `data/mp4/${uploadId}.mp4`);
     const hlsPath = path.join(process.cwd(), `data/hls/${uploadId}`);
+    const {encodingSpeed, segmentSize, framerate} = video;
 
+    // Get the streams quality settings
+    const streamsEl: StreamQualityElement[] = await db.all('SELECT * FROM StreamsQuality WHERE uploadId = ?', uploadId);
+    const streams = [...streamsEl].sort((a, b) => a.stream - b.stream).map(el => el.quality);
+    
     // Encoding to HLS
-    await encodeMP4ToHLS(mp4Path, hlsPath);
+    await encodeMP4ToHLS(mp4Path, hlsPath, encodingSpeed, segmentSize, framerate, streams);
     
     // Unlock encoding process and change the video status to DONE
     await db.run('UPDATE Videos SET status = ? WHERE uploadId = ?', [VideoStatus.DONE, uploadId]);
@@ -98,7 +103,7 @@ async function checkMP4File(filename: string) {
  * @param mp4Path input MP4 file to transcode e.g: 'data/mp4/1234-a5b6.mp4'
  * @param hlsPath output directory path e.g: 'data/hls/1234-a5b6'
  */
-async function encodeMP4ToHLS(mp4Path: string, hlsPath: string) {
+async function encodeMP4ToHLS(mp4Path: string, hlsPath: string, encodingSpeed: EncodingSpeed, segmentSize: number, framerate: number, streams: StreamQuality[]) {
   console.log('Transcoding', mp4Path);
 
   // Video encoding in HLS for adaptive bitrate and resolution streaming
