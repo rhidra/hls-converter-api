@@ -67,7 +67,7 @@ router.post('/upload/:uploadId', upload.single('media'), async (req, res) => {
       message: 'Wrong upload ID ! You need to request a valid upload ID with /api/request.',
     });
   }
-  if (ref.status !== VideoStatus.NOT_UPLOADED && ref.status !== VideoStatus.UPLOADING) {
+  if (ref.status !== VideoStatus.NOT_UPLOADED && ref.status !== VideoStatus.PENDING) {
     return res.status(400).json({
       error: 'Upload error',
       message: 'A video has already been uploaded with this upload ID, you need a new one !',
@@ -83,19 +83,20 @@ router.post('/upload/:uploadId', upload.single('media'), async (req, res) => {
     });
   }
 
-  // Write the file to the disk
-  const fileMP4Path = `data/mp4/${uploadId}.${ext}`;
-  fs.writeFileSync(fileMP4Path, req.file.buffer);
-
   // Set the video status to "encoding"
+  const fileMP4Path = `data/mp4/${uploadId}.${ext}`;
   await db.run(`UPDATE Videos
     SET
-      status = ${VideoStatus.ENCODING},
+      status = ${VideoStatus.PENDING},
       mp4Path = ?,
       originalName = ?
     WHERE uploadId = ?`,
     [fileMP4Path, req.file.originalname, uploadId]);
+  
+  // Write the file to the disk
+  fs.writeFileSync(fileMP4Path, req.file.buffer);
 
+  // Upload done
   res.sendStatus(200);
 });
 
