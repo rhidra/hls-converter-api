@@ -24,6 +24,9 @@ router.get('/download/:uploadId', async (req, res) => {
   res.setHeader('Content-disposition', `attachment;filename=${filename}.zip`);
   res.setHeader('Content-Length', result.length);
   res.send(result);
+
+  // Update the video status
+  await db.run('UPDATE Videos SET status = ? WHERE uploadId = ?', [VideoStatus.DOWNLOADED, uploadId]);
 });
 
 export default router;

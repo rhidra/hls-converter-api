@@ -1,9 +1,11 @@
 import express from 'express';
 import morgan from 'morgan';
+import path from 'path';
 import sqlite3 from 'sqlite3';
 import apiUploadRouter from './api/upload';
 import apiStatusRouter from './api/status';
 import apiDownloadRouter from './api/download';
+import apiCleanupRouter from './api/cleanup';
 import { getDB, setupDB } from './db';
 
 const app = express();
@@ -34,9 +36,14 @@ sqlite3.verbose();
   app.use('/api', apiUploadRouter);
   app.use('/api', apiStatusRouter);
   app.use('/api', apiDownloadRouter);
+  app.use('/api', apiCleanupRouter);
 
+  // Frontend serving
+  // app.get('*', (req, res) => res.sendFile('index.html', {root: path.join(__dirname, './app')}));
+  app.use('/', express.static(__dirname + '/app'));
+
+  // Starts to listen on the port
   app.listen(port, () => {
-      console.log( `server started at http://localhost:${ port }` );
+    console.log(`Server started at http://localhost:${port}`);
   });
-
 })();
