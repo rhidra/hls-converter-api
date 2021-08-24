@@ -17,11 +17,13 @@ async function runServer() {
 
   // Regular job to check for forgotten files to encode
   setInterval(() => {
-    fs.readdir('data/mp4', (err, files) => {
+    fs.readdir('data/mp4', async (err, files) => {
       if (err) {
         console.error('Error reading /data/mp4', err);
       }
-      files.forEach(filename => checkMP4File(filename));
+      for (const filename of files) {
+        await checkMP4File(filename);
+      }
     });
   }, 10000);
 
