@@ -1,7 +1,7 @@
 import { Database, open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import path from 'path';
-import {VideoStatus} from './types';
+import {EncodingSpeed, StreamQuality, VideoStatus} from './types';
 
 /**
  * Connect to the SQLite database and configures it correctly.
@@ -26,10 +26,25 @@ export async function getDB() {
 
 export async function setupDB() {
   await db.exec(`
+    DROP TABLE IF EXISTS StreamsQuality;
+    DROP TABLE IF EXISTS Videos;
+
     CREATE TABLE IF NOT EXISTS Videos (
       uploadId TEXT PRIMARY KEY,
       originalName TEXT,
-      status TINYINT NOT NULL DEFAULT ${VideoStatus.NOT_UPLOADED}
+      status TINYINT NOT NULL DEFAULT ${VideoStatus.NOT_UPLOADED},
+      
+      encodingSpeed TINYINT NOT NULL DEFAULT ${EncodingSpeed.MEDIUM},
+      segmentSize TINYINT NOT NULL DEFAULT 6,
+      framerate INTEGER NOT NULL DEFAULT 25
+    );
+
+    CREATE TABLE IF NOT EXISTS StreamsQuality (
+      uploadId TEXT,
+      stream INTEGER,
+      quality TINYINT NOT NULL DEFAULT ${StreamQuality.MOBILE_360P},
+      FOREIGN KEY(uploadId) REFERENCES Videos(uploadId),
+      PRIMARY KEY(uploadId, stream)
     );
   `);
 }

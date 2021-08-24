@@ -1,3 +1,18 @@
+export type Video = {
+  uploadId: string;
+  originalName?: string;
+  status: VideoStatus;
+  encodingSpeed: EncodingSpeed;
+  segmentSize: number;
+  framerate: number;
+};
+
+export type StreamQualityElement = {
+  uploadId: string;
+  stream: number;
+  quality: StreamQuality;
+}
+
 export enum VideoStatus {
   NOT_UPLOADED = 0,
   PENDING = 1,
@@ -5,10 +20,20 @@ export enum VideoStatus {
   DONE = 3,
   DOWNLOADED = 4,
   ERROR = 5,
-}
+};
 
-export type Video = {
-  uploadId: string;
-  originalName?: string;
-  status: VideoStatus;
+// Compromise between fast encoding / large files
+export enum EncodingSpeed {
+  FAST = 0,
+  MEDIUM = 1,
+  SLOW = 2,
+};
+
+export enum StreamQuality {
+  HD_1080P = 0,
+  HD_720P = 1,
+  SD_540P = 2,
+  SD_480P = 3,
+  MOBILE_360P = 4,
+  MOBILE_240P = 5,
 }
