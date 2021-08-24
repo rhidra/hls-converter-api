@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { VideoStatus, Video } from '../types';
 import {getDB} from '../db';
-import {getExtension} from '../utils';
+import {getExtension, removeExtension} from '../utils';
 import {spawn} from 'child_process';
 
 let isProcessing = false;
@@ -39,7 +39,7 @@ async function runServer() {
 // @param filename MP4 file name e.g: '1234-b6a8.mp4'
 async function checkMP4File(filename: string) {
   const ext = getExtension(filename);
-  const uploadId = filename.substring(0, filename.length - ext.length - 1);
+  const uploadId = removeExtension(filename);
   if (ext !== 'mp4') {
     return;
   }
@@ -63,7 +63,6 @@ async function checkMP4File(filename: string) {
 
     // Check if the video status is valid for encoding
     const res: Video = await db.get('SELECT * FROM Videos WHERE uploadId = ?', uploadId);
-    console.log(`Check video ${uploadId} status (${res.status})`);
     if ((res.status !== VideoStatus.PENDING && res.status !== VideoStatus.ENCODING) || !res.mp4Path || res.hlsPath) {
       isProcessing = false;
       return;

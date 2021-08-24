@@ -1,10 +1,9 @@
 import express from 'express';
 import morgan from 'morgan';
 import sqlite3 from 'sqlite3';
-import {Database, open} from 'sqlite';
-import path from 'path';
 import apiUploadRouter from './api/upload';
 import apiStatusRouter from './api/status';
+import apiDownloadRouter from './api/download';
 import { getDB, setupDB } from './db';
 
 const app = express();
@@ -33,6 +32,7 @@ sqlite3.verbose();
 
   app.use('/api', apiUploadRouter);
   app.use('/api', apiStatusRouter);
+  app.use('/api', apiDownloadRouter);
 
   app.listen(port, () => {
       console.log( `server started at http://localhost:${ port }` );
