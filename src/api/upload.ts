@@ -88,10 +88,9 @@ router.post('/upload/:uploadId', upload.single('media'), async (req, res) => {
   await db.run(`UPDATE Videos
     SET
       status = ${VideoStatus.PENDING},
-      mp4Path = ?,
       originalName = ?
     WHERE uploadId = ?`,
-    [fileMP4Path, req.file.originalname, uploadId]);
+    [req.file.originalname, uploadId]);
   
   // Write the file to the disk
   fs.writeFileSync(fileMP4Path, req.file.buffer);

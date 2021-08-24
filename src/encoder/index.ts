@@ -63,7 +63,7 @@ async function checkMP4File(filename: string) {
 
     // Check if the video status is valid for encoding
     const res: Video = await db.get('SELECT * FROM Videos WHERE uploadId = ?', uploadId);
-    if ((res.status !== VideoStatus.PENDING && res.status !== VideoStatus.ENCODING) || !res.mp4Path || res.hlsPath) {
+    if (res.status !== VideoStatus.PENDING && res.status !== VideoStatus.ENCODING) {
       isProcessing = false;
       return;
     }
@@ -73,7 +73,7 @@ async function checkMP4File(filename: string) {
     await db.run('UPDATE Videos SET status = ? WHERE uploadId = ?', [VideoStatus.ENCODING, uploadId]);
 
     // File paths
-    const mp4Path = path.join(process.cwd(), res.mp4Path);
+    const mp4Path = path.join(process.cwd(), `data/mp4/${uploadId}.mp4`);
     const hlsPath = path.join(process.cwd(), `data/hls/${uploadId}`);
 
     // Encoding to HLS

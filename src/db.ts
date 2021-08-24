@@ -29,8 +29,6 @@ export async function setupDB() {
     CREATE TABLE IF NOT EXISTS Videos (
       uploadId TEXT PRIMARY KEY,
       originalName TEXT,
-      mp4Path TEXT,
-      hlsPath TEXT,
       status TINYINT NOT NULL DEFAULT ${VideoStatus.NOT_UPLOADED}
     );
   `);
