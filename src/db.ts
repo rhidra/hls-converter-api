@@ -31,7 +31,7 @@ export async function setupDB() {
       originalName TEXT,
       mp4Path TEXT,
       hlsPath TEXT,
-      status TINYINT NOT NULL DEFAULT ${VideoStatus.NOT_UPLOADED} 
+      status TINYINT NOT NULL DEFAULT ${VideoStatus.NOT_UPLOADED}
     );
   `);
-} 
+}

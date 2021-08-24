@@ -6,7 +6,7 @@ const router = Router();
 
 /**
  * GET /api/status/:uploadId
- * 
+ *
  * Returns the current status of a file processing.
  */
 router.get('/status/:uploadId', async (req, res) => {

@@ -18,7 +18,7 @@ router.get('/', (req, res) => res.sendStatus(200));
 
 /**
  * POST /api/request
- * 
+ *
  * Register a future video upload.
  * Reply with an upload ID which should be later used for further requests.
  * The upload ID defines the encoding process for one video file.
@@ -33,7 +33,7 @@ router.post('/request', async (req, res) => {
 
 /**
  * POST /api/upload/:uploadId
- * 
+ *
  * Upload a single MP4 video file.
  * The request should be a multipart/form-data request, similar to a form send.
  * The video file should be the single element of the form, with the
@@ -88,11 +88,11 @@ router.post('/upload/:uploadId', upload.single('media'), async (req, res) => {
   fs.writeFileSync(fileMP4Path, req.file.buffer);
 
   // Set the video status to "encoding"
-  await db.run(`UPDATE Videos 
-    SET 
-      status = ${VideoStatus.ENCODING}, 
+  await db.run(`UPDATE Videos
+    SET
+      status = ${VideoStatus.ENCODING},
       mp4Path = ?,
-      originalName = ? 
+      originalName = ?
     WHERE uploadId = ?`,
     [fileMP4Path, req.file.originalname, uploadId]);
 
