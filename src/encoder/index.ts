@@ -5,6 +5,8 @@ import {getDB} from '../db';
 import {getExtension} from '../utils';
 import {spawn} from 'child_process';
 
+let isProcessing = false;
+
 // Main function, filesystem watcher
 async function runServer() {
   // File system watcher
@@ -16,20 +18,22 @@ async function runServer() {
   });
 
   // Regular job to check for forgotten files to encode
-  setInterval(() => {
+  setInterval(
+    () => {
     fs.readdir('data/mp4', async (err, files) => {
       if (err) {
         console.error('Error reading /data/mp4', err);
       }
-      for (const filename of files) {
-        await checkMP4File(filename);
+      if (!isProcessing) {
+        for (const filename of files) {
+          await checkMP4File(filename);
+        }
       }
     });
   }, 10000);
 
 }
 
-let isProcessing = false;
 
 // Check and process an MP4 file if it needs to
 // @param filename MP4 file name e.g: '1234-b6a8.mp4'
@@ -40,23 +44,53 @@ async function checkMP4File(filename: string) {
     return;
   }
 
-
+  // Wait until all other jobs are done
+  await new Promise<void>(resolve => {
+    function check_() {
+      if (isProcessing) {
+        setTimeout(check_, 1000);
+      } else {
+        resolve();
+      }
+    }
+    check_();
+  });
+  
   const db = await getDB();
-  const res: Video = await db.get('SELECT * FROM Videos WHERE uploadId = ?', uploadId);
-  if (res.status !== VideoStatus.PENDING || !res.mp4Path || res.hlsPath) {
-    return;
+  try {
+    // Lock the encoding process
+    isProcessing = true;
+
+    // Check if the video status is valid for encoding
+    const res: Video = await db.get('SELECT * FROM Videos WHERE uploadId = ?', uploadId);
+    console.log(`Check video ${uploadId} status (${res.status})`);
+    if ((res.status !== VideoStatus.PENDING && res.status !== VideoStatus.ENCODING) || !res.mp4Path || res.hlsPath) {
+      isProcessing = false;
+      return;
+    }
+
+    // Change video status to ENCODING
+    console.log(`Change video status of ${uploadId} to ENCODING`)
+    await db.run('UPDATE Videos SET status = ? WHERE uploadId = ?', [VideoStatus.ENCODING, uploadId]);
+
+    // File paths
+    const mp4Path = path.join(process.cwd(), res.mp4Path);
+    const hlsPath = path.join(process.cwd(), `data/hls/${uploadId}`);
+
+    // Encoding to HLS
+    await encodeMP4ToHLS(mp4Path, hlsPath);
+    
+    // Unlock encoding process and change the video status to DONE
+    await db.run('UPDATE Videos SET status = ? WHERE uploadId = ?', [VideoStatus.DONE, uploadId]);
+    isProcessing = false;
+
+    console.log(`Encoding of ${uploadId} done !`);
+  } catch (err) {
+    console.error(`Cannot encode the video ${uploadId}`);
+    console.error(err);
+    await db.run('UPDATE Videos SET status = ? WHERE uploadId = ?', [VideoStatus.ERROR, uploadId]);
+    isProcessing = false;
   }
-
-  const mp4Path = path.join(process.cwd(), res.mp4Path);
-  const hlsPath = path.join(process.cwd(), `data/hls/${uploadId}`);
-
-  if (isProcessing) {
-    return;
-  }
-  isProcessing = true;
-  await encodeMP4ToHLS(mp4Path, hlsPath);
-  isProcessing = false;
-
 }
 
 
