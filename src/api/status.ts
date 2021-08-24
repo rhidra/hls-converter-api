@@ -35,10 +35,10 @@ router.get('/status/:uploadId', async (req, res) => {
         status: 'NOT_UPLOADED',
         message: 'Your file has not been uploaded yet.',
       });
-    case VideoStatus.UPLOADING:
+    case VideoStatus.PENDING:
       return res.json({
-        status: 'UPLOADING',
-        message: 'Your file is currently being uploaded.',
+        status: 'PENDING',
+        message: 'Your file is waiting to be encoded.',
       });
     case VideoStatus.ENCODING:
       return res.json({

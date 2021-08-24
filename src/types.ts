@@ -1,6 +1,6 @@
 export enum VideoStatus {
   NOT_UPLOADED = 0,
-  UPLOADING = 1,
+  PENDING = 1,
   ENCODING = 2,
   DONE = 3,
   DOWNLOADED = 4,
