@@ -9,7 +9,7 @@ export enum VideoStatus {
 
 export type Video = {
   uploadId: string;
-  mp4Filename?: string;
-  hlsFilename?: string;
+  mp4Path?: string;
+  hlsPath?: string;
   status: VideoStatus;
 }
