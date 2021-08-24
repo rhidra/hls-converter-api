@@ -21,7 +21,7 @@ router.get('/status/:uploadId', async (req, res) => {
 
   // Check if the upload ID exists
   const db = await getDB();
-  const ref: Video = await db.get('SELECT * FROM Videos WHERE uploadId = ?', uploadId);
+  const ref = await db.get<Video>('SELECT * FROM Videos WHERE uploadId = ?', uploadId);
   if (!ref) {
     return res.status(400).json({
       error: 'Wrong check',
