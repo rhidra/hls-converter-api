@@ -47,9 +47,7 @@ export async function getZippedFolderSync(dir: string) {
 
 	let zip = new JSZip();
   for (const filePath of allPaths) {
-    let addPath = path.relative(path.join(dir, ".."), filePath);
-    // let addPath = path.relative(dir, filePath) // use this instead if you don't want the source folder itself in the zip
-
+    let addPath = path.relative(dir, filePath);
     let data = fs.readFileSync(filePath);
     zip.file(addPath, data);
   }
