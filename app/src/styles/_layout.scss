@@ -1,0 +1,44 @@
+.main-layout {
+  min-height: 100vh;
+
+  nav.header {
+    width: 100vw;
+    min-height: 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1.title {
+      font-weight: 300;
+      font-size: 24px;
+      margin: 0 2rem;
+      color: $grey-8;
+    }
+
+    a.call-to-action {
+      background: $red-3;
+      padding: .75rem 4rem;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      margin-right: 2rem;
+      color: $grey-1;
+      box-shadow: $shadow-4;
+      transition: 150ms linear background;
+
+      &:hover {
+        cursor: pointer;
+        background: $red-4;
+      }
+    }
+  }
+
+  header {
+    background: 
+      linear-gradient(0deg, rgba($red-3, 0.4), rgba($red-3, 0.4)), 
+      radial-gradient(58.65% 75.06% at 100% 0%, #F42E2B 7.81%, rgba(251, 187, 186, 0) 100%), 
+      radial-gradient(73.57% 67.13% at 0% 76.22%, #F16427 14.58%, rgba(240, 108, 51, 0) 91.15%);
+    min-height: 50vh;
+    clip-path: ellipse(75% 100% at center 0);
+    position: relative;
+  }
+}
