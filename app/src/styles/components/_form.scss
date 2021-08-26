@@ -1,0 +1,49 @@
+.select {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: $grey-9;
+
+  .select-box {
+    position: relative;
+    background: $grey-2;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    transition: 150ms linear background;
+
+    &:hover, &:active, &:focus {
+      background: $grey-3;
+    }
+
+    label {
+      margin-bottom: .5rem;
+    }
+    
+    select {
+      padding: .75rem 40px .75rem .75rem;
+      border-radius: 5px;
+      width: 100%;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+    }
+
+    .caret {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 30px;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        position: relative;
+        top: -3px;
+      }
+    }
+  }
+}

@@ -179,11 +179,16 @@
         box-sizing: border-box;
         transition: 1000ms ease-in-out all;
         overflow: hidden;
+        display: flex;
 
         &.file-selected {
-          height: 500px;
+          height: auto;
           padding: 1.5rem;
           padding-top: calc(30px + 1rem);
+        }
+
+        .col {
+          width: 50%;  
         }
       }
     }
