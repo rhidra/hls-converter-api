@@ -1,0 +1,25 @@
+main.upload-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > div {
+    width: 100%;
+    background: $grey-1;
+    border-radius: 20px;
+    box-shadow: $shadow-5;
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 20%;
+    height: 60%;
+
+    .loader {
+      position: relative;
+      left: -10px;
+    }
+  }
+}

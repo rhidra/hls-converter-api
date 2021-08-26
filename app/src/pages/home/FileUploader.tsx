@@ -4,7 +4,11 @@ import { EncodingSettings, EncodingSpeed, StreamQuality } from "../../types";
 import { formatSize } from "../../utils/utils";
 import SettingsForm from "./SettingsForm";
 
-const FileUploader: FC = () => {
+type Props = {
+  onSubmit: (f: File, s: EncodingSettings) => void;
+};
+
+const FileUploader: FC<Props> = ({ onSubmit }) => {
   const input = useRef(null);
   const dropdown = useRef(null);
   const [file, setFile] = useState<File>();
@@ -35,11 +39,13 @@ const FileUploader: FC = () => {
   });
 
   function handleSubmit() {
-    
+    if (file) {
+      onSubmit(file, settings);
+    }
   }
 
   return (
-    <main>
+    <main className="file-uploader">
       <input 
         type="file" 
         hidden 

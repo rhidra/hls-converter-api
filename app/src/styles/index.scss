@@ -40,6 +40,8 @@ select::-ms-expand {
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap');
 
 @import "components/select";
-@import "components/streamsSelector";
+@import "components/loader";
+@import "components/streams-selector";
 @import "layout/layout";
-@import "pages/home";
+@import "pages/upload-state";
+@import "pages/file-upload";
