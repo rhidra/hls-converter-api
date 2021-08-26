@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {FaCloudUploadAlt, FaTrashAlt} from "react-icons/fa"
+import Header from '../layouts/header';
 import { formatSize } from '../utils/utils';
 
 export default function Home() {
@@ -25,16 +26,7 @@ export default function Home() {
 
   return (
     <div className="main-layout">
-      <header>
-        <nav className="header">
-          <h1 className="title">HLS Converter</h1>
-          <a className="call-to-action">Access the API</a>
-        </nav>
-
-        <div className="slogan">
-          Convert any video to a <strong>HLS stream</strong>
-        </div>
-      </header>
+      <Header/>
 
       <main>
         <input 
