@@ -25,4 +25,22 @@ export default class ApiProxy {
       return undefined;
     }
   }
+
+  async uploadVideoFile(uploadId: string, file: File) {
+    const body = new FormData();
+    body.append('media', file);
+
+    const res = await fetch(`${this.baseUrl}/api/upload/${uploadId}`,  {method: 'POST', body});
+    return res.ok;
+  }
+
+  async checkStatus(uploadId: string) {
+    const res = await fetch(`${this.baseUrl}/api/status/${uploadId}`,  {method: 'GET'});
+    return await res.json();
+  }
+
+  async downloadFile(uploadId: string) {
+    const res = await fetch(`${this.baseUrl}/api/download/${uploadId}`,  {method: 'GET'});
+    return await res.blob();
+  }
 }

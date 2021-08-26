@@ -17,3 +17,15 @@ export function formatSize(size: number): string {
 
   return size.toFixed(1) + ' ' + units[u];
 }
+
+// Returns the extension of a file or undefined: "video.mp4" -> "mp4"
+export function getExtension(filename: string): string {
+  const ext = (/(?:\.([^.]+))?$/.exec(filename) ?? ['', ''])[1];
+  return ext ? ext.toLowerCase() : ext;
+}
+
+// Returns the file name without the extension or undefined: "video.mp4" -> "video"
+export function removeExtension(filename: string): string {
+  const ext = getExtension(filename) ?? '';
+  return filename.substring(0, filename.length - ext.length - 1);
+}
