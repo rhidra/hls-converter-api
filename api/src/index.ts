@@ -1,6 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
-import path from 'path';
+import cors from 'cors';
 import sqlite3 from 'sqlite3';
 import apiUploadRouter from './api/upload';
 import apiStatusRouter from './api/status';
@@ -22,6 +22,9 @@ sqlite3.verbose();
 
   // Log the HTTP request
   app.use(morgan('dev'));
+
+  // CORS
+  app.use(cors())
 
   app.get("/videos", async (req, res) => {
     try {
