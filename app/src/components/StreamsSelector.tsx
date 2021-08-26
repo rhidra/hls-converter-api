@@ -51,7 +51,7 @@ const StreamsSelector: FC<Props> = ({value, onChange}) => {
             </button>
           }
           {i === value.length - 1 &&
-            <button onClick={() => handleAdd()}>
+            <button disabled={value.length >= 5} onClick={() => handleAdd()}>
               <FiPlus/>
             </button>
           }

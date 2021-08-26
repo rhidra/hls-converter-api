@@ -2,12 +2,20 @@ import React, { useEffect, useRef, useState } from 'react';
 import {FaCloudUploadAlt, FaTrashAlt} from "react-icons/fa"
 import SettingsForm from '../components/SettingsForm';
 import Header from '../layouts/header';
+import { EncodingSettings, EncodingSpeed, StreamQuality } from '../types';
 import { formatSize } from '../utils/utils';
 
 export default function Home() {
   const input = useRef(null);
   const dropdown = useRef(null);
   const [file, setFile] = useState<File>();
+
+  const [settings, setSettings] = useState<EncodingSettings>({
+    encodingSpeed: EncodingSpeed.MEDIUM,
+    segmentSize: 6,
+    framerate: 25,
+    streams: [StreamQuality.MOBILE_240P],
+  });
 
   useEffect(() => {
     if (dropdown?.current) {
@@ -68,7 +76,15 @@ export default function Home() {
           </div>
 
           <div className={`settings ${file ? 'file-selected' : ''}`}>
-            <SettingsForm/>
+            <div className="settings-row">
+              <SettingsForm value={settings} onChange={v => setSettings(v)}/>
+            </div>
+
+            <div className="upload-button">
+              <button>
+                Upload and convert
+              </button>
+            </div>
           </div>
         </article>
       </main>

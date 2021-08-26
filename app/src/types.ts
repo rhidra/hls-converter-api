@@ -21,3 +21,10 @@ export enum StreamQuality {
   HD_720P = 4,
   HD_1080P = 5,
 }
+
+export type EncodingSettings = {
+  encodingSpeed: EncodingSpeed;
+  segmentSize: number;
+  framerate: number;
+  streams: StreamQuality[];
+};

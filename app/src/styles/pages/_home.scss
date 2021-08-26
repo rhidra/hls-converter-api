@@ -115,7 +115,7 @@ main {
     }
 
     .settings {
-      height: 0;
+      max-height: 0px;
       background: $grey-1;
       position: relative;
       top: -30px;
@@ -124,20 +124,48 @@ main {
       z-index: -3;
       box-shadow: $shadow-5;
       box-sizing: border-box;
-      transition: 1000ms ease height, 100ms linear padding;
+      transition: 1000ms linear max-height, 100ms linear padding;
       overflow: hidden;
-      display: flex;
       padding: 0 1.5rem;
-      
+
       &.file-selected {
-        height: 400px;
+        max-height: 600px;
         padding-top: calc(30px + 1rem);
       }
 
-      .col {
-        width: 50%;
-        &:first-child { margin-right: .5rem; }
-        &:last-child { margin-left: .5rem; }
+      .settings-row {
+        width: 100%;
+        display: flex;  
+
+        .col {
+          width: 50%;
+          &:first-child { margin-right: .5rem; }
+          &:last-child { margin-left: .5rem; }
+        }
+      }
+
+      .upload-button {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        button {
+          background: $grey-2;
+          width: 100%;
+          max-width: 500px;
+          padding: 1rem;
+          border-radius: 50px;
+          cursor: pointer;
+          transition: 150ms linear all;
+          font-size: 1.2rem;
+          color: $grey-8;
+          margin: 1rem 0 2rem;
+
+          &:hover {
+            color: $grey-1;
+            background: $red-5;
+          }
+        }
       }
     }
   }

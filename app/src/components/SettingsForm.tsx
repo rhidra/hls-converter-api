@@ -1,13 +1,14 @@
-import { FC, useState } from "react";
-import { StreamQuality } from "../types";
+import { FC } from "react";
+import { EncodingSettings, EncodingSpeed } from "../types";
 import SelectInput from "./SelectInput";
 import StreamsSelector from "./StreamsSelector";
 
-const SettingsForm: FC = () => {
-  const [encodingSpeed, setEncodingSpeed] = useState('medium');
-  const [segmentSize, setSegmentSize] = useState('6');
-  const [framerate, setFramerate] = useState('25');
-  const [streams, setStreams] = useState([StreamQuality.MOBILE_240P, StreamQuality.HD_720P]);
+type Props = {
+  value: EncodingSettings;
+  onChange: (v: EncodingSettings) => void;
+};
+
+const SettingsForm: FC<Props> = ({value, onChange}) => {
 
   return (
     <>
@@ -15,19 +16,19 @@ const SettingsForm: FC = () => {
       <SelectInput
         id="encoding-speed"
         label="Encoding speed"
-        value={encodingSpeed}
-        onChange={v => setEncodingSpeed(v)}
+        value={`${value.encodingSpeed}`}
+        onChange={v => onChange({...value, encodingSpeed: parseInt(v)})}
         options={[
-          {value: 'slow', label: 'Slow'},
-          {value: 'medium', label: 'Medium'},
-          {value: 'fast', label: 'Fast'},
+          {value: `${EncodingSpeed.SLOW}`, label: 'Slow'},
+          {value: `${EncodingSpeed.MEDIUM}`, label: 'Medium'},
+          {value: `${EncodingSpeed.FAST}`, label: 'Fast'},
         ]}
       />
       <SelectInput
         id="segment-size"
         label="Segments size"
-        value={segmentSize}
-        onChange={v => setSegmentSize(v)}
+        value={`${value.segmentSize}`}
+        onChange={v => onChange({...value, segmentSize: parseInt(v)})}
         options={[
           {value: '2', label: '2'},
           {value: '4', label: '4'},
@@ -39,8 +40,8 @@ const SettingsForm: FC = () => {
       <SelectInput
         id="framerate"
         label="Framerate"
-        value={framerate}
-        onChange={v => setFramerate(v)}
+        value={`${value.framerate}`}
+        onChange={v => onChange({...value, framerate: parseInt(v)})}
         options={[
           {value: '23', label: '23.976'},
           {value: '24', label: '24'},
@@ -53,8 +54,8 @@ const SettingsForm: FC = () => {
     </div>
     <div className="col">
       <StreamsSelector
-        value={streams}
-        onChange={v => setStreams(v)}
+        value={value.streams}
+        onChange={v => onChange({...value, streams: v})}
       />
     </div>
     </>
