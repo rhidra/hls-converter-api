@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { EncodingSettings, EncodingSpeed } from "../types";
-import SelectInput from "./SelectInput";
+import { EncodingSettings, EncodingSpeed } from "../../types";
+import SelectInput from "../../components/SelectInput";
 import StreamsSelector from "./StreamsSelector";
 
 type Props = {

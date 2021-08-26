@@ -1,6 +1,6 @@
 import { FC } from "react";
-import {StreamQuality} from '../types';
-import SelectInput from "./SelectInput";
+import {StreamQuality} from '../../types';
+import SelectInput from "../../components/SelectInput";
 import { FiPlus } from 'react-icons/fi';
 import { FaTrashAlt } from "react-icons/fa";
 
