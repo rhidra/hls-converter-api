@@ -177,13 +177,13 @@
         z-index: -3;
         box-shadow: $shadow-5;
         box-sizing: border-box;
-        transition: 1000ms ease-in-out all;
+        transition: 1000ms ease height, 100ms linear padding;
         overflow: hidden;
         display: flex;
-
+        padding: 0 1.5rem;
+        
         &.file-selected {
-          height: auto;
-          padding: 1.5rem;
+          height: 400px;
           padding-top: calc(30px + 1rem);
         }
 
