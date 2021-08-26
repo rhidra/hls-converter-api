@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {FaCloudUploadAlt, FaTrashAlt} from "react-icons/fa"
+import SettingsForm from '../components/SettingsForm';
 import Header from '../layouts/header';
 import { formatSize } from '../utils/utils';
 
@@ -18,8 +19,10 @@ export default function Home() {
       };
 
       (dropdown.current as any).ondrop = (event: DragEvent) => {
-        setFile(event.dataTransfer?.files[0]);
-        event.preventDefault();
+        if (!file) {
+          setFile(event.dataTransfer?.files[0]);
+          event.preventDefault();
+        }
       };
     }
   })
@@ -36,32 +39,38 @@ export default function Home() {
           onChange={(e: any) => setFile(e.target.files[0])}
           multiple={false}
         />
-        <section 
-          ref={dropdown}
-          className={`dropdown ${file ? 'file-selected' : ''}`} 
-          onClick={() => file ? null : (input?.current as any).click()}>
+        <article className={file ? 'file-selected' : ''}>
+          <div 
+            ref={dropdown}
+            className={`dropdown ${file ? 'file-selected' : ''}`} 
+            onClick={() => file ? null : (input?.current as any).click()}>
 
-          <div className={`inner ${file ? 'file-selected' : ''}`}>
-            <FaCloudUploadAlt/>
-            <span>Drop a video !</span>
+            <div className={`inner ${file ? 'file-selected' : ''}`}>
+              <FaCloudUploadAlt/>
+              <span>Drop a video !</span>
+            </div>
+
+            {file &&
+              <div className="file">
+                <div className="file-col">
+                  <span className="name">
+                    {file.name}
+                  </span>
+                  <span className="size">
+                    {formatSize(file.size)}
+                  </span>
+                </div>
+                <button onClick={() => setFile(undefined)}>
+                  <FaTrashAlt/>
+                </button>
+              </div>
+            }
           </div>
 
-          {file &&
-            <div className="file">
-              <div className="file-col">
-                <span className="name">
-                  {file.name}
-                </span>
-                <span className="size">
-                  {formatSize(file.size)}
-                </span>
-              </div>
-              <button onClick={() => setFile(undefined)}>
-                <FaTrashAlt/>
-              </button>
-            </div>
-          }
-        </section>
+          <div className={`settings ${file ? 'file-selected' : ''}`}>
+            <SettingsForm/>
+          </div>
+        </article>
       </main>
     </div>
   );

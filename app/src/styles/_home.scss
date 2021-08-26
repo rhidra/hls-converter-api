@@ -56,100 +56,134 @@
     flex-direction: column;
     align-items: center;
 
-    section.dropdown {
-      width: 100%;
+    article {
       max-width: 700px;
-      height: 500px;
-      background: $grey-8;
-      border-radius: 30px;
       transform: translateY(-45%);
-      box-shadow: $shadow-5;
+      width: 100%;
+      transition: 1000ms ease-out transform;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 
-        150ms linear background, 
-        150ms linear color,
-        1000ms ease-in-out height;
-      color: $grey-3;
-
-      &:hover {
-        background: $grey-9;
-        color: $grey-1;
-      }
 
       &.file-selected {
-        cursor: inherit;
-        height: 130px;
-        &:hover {
-          background: $grey-8;
-          color: $grey-3;
-        }
+        transform: translateY(-300px);
       }
-
-      .inner {
-        width: calc(100% - 50px);
-        height: calc(100% - 50px);
-        border: 8px dashed $grey-3;
+    
+      .dropdown {
+        height: 500px;
+        width: 100%;
+        background: $grey-8;
         border-radius: 30px;
+        box-shadow: $shadow-5;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
         align-items: center;
-        font-size: 1.5rem;
-        transition: 500ms linear opacity;
-        z-index: 5;
+        justify-content: center;
+        cursor: pointer;
+        transition: 
+          150ms linear background, 
+          150ms linear color,
+          1000ms ease-in-out height;
+        color: $grey-3;
+        z-index: 4;
 
-        svg {
-          font-size: 130px;
-          margin-bottom: 2rem;
+        &:hover {
+          background: $grey-9;
+          color: $grey-1;
         }
 
         &.file-selected {
-          opacity: 0;
-          position: absolute;
+          cursor: inherit;
+          height: 130px;
+          &:hover {
+            background: $grey-8;
+            color: $grey-3;
+          }
+        }
+
+        .inner {
+          width: calc(100% - 50px);
+          height: calc(100% - 50px);
+          border: 8px dashed $grey-3;
+          border-radius: 30px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-size: 1.5rem;
+          transition: 500ms linear opacity;
+          z-index: 5;
+
+          svg {
+            font-size: 130px;
+            margin-bottom: 2rem;
+          }
+
+          &.file-selected {
+            opacity: 0;
+            position: absolute;
+            pointer-events: none;
+          }
+        }
+
+        .file {
+          z-index: 10;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          padding: 0 3rem;
+          color: $grey-2;
+
+          .file-col {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .size {
+            color: rgba($grey-5, .8);
+          }
+
+          button {
+            height: 50px;
+            width: 50px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: 150ms linear background;
+
+            &:hover {
+              background: rgba($red-3, 0.4);
+            }
+
+            &:active {
+              background: rgba($red-3, 0.7);
+            }
+
+            svg {
+              font-size: 20px;
+              color: $grey-2;
+            }
+          }
         }
       }
 
-      .file {
-        z-index: 10;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        padding: 0 3rem;
-        color: $grey-2;
+      .settings {
+        height: 0;
+        background: $grey-1;
+        position: relative;
+        top: -30px;
+        width: 95%;
+        border-radius: 30px;
+        z-index: -3;
+        box-shadow: $shadow-5;
+        box-sizing: border-box;
+        transition: 1000ms ease-in-out all;
+        overflow: hidden;
 
-        .file-col {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .size {
-          color: rgba($grey-5, .8);
-        }
-
-        button {
-          height: 50px;
-          width: 50px;
-          cursor: pointer;
-          border-radius: 50%;
-          transition: 150ms linear background;
-
-          &:hover {
-            background: rgba($red-3, 0.4);
-          }
-
-          &:active {
-            background: rgba($red-3, 0.7);
-          }
-
-          svg {
-            font-size: 20px;
-            color: $grey-2;
-          }
+        &.file-selected {
+          height: 500px;
+          padding: 1.5rem;
+          padding-top: calc(30px + 1rem);
         }
       }
     }
