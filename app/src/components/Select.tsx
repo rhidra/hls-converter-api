@@ -1,16 +1,30 @@
 import { FC } from "react";
 import { FaCaretDown } from 'react-icons/fa';
 
-const Select: FC = () => {
+type Props = {
+  id?: string;
+  onChange: (v: string) => void;
+  label?: string;
+  value: string;
+  options: {
+    label: string,
+    value: string,
+  }[];
+};
+
+const Select: FC<Props> = ({onChange, value, options, id, label}) => {
 
   return (
     <div className="select">
-      <label htmlFor="encoding-speed">Encoding speed</label>
+      {label &&
+        <label htmlFor={id}>{label}</label>
+      }
+      
       <div className="select-box">
-        <select name="pets" id="encoding-speed">
-            <option value="slow">Slow</option>
-            <option value="medium" selected>Medium</option>
-            <option value="fast">Fast</option>
+        <select name={id} id={id} value={value} onChange={v => onChange(v.target.value)}>
+          {options.map(({label, value}) => (
+            <option value={value}>{label}</option>
+          ))}
         </select>
 
         <div className="caret">
