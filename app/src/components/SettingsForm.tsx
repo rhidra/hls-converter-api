@@ -1,15 +1,18 @@
 import { FC, useState } from "react";
-import Select from "./Select";
+import { StreamQuality } from "../types";
+import SelectInput from "./SelectInput";
+import StreamsSelector from "./StreamsSelector";
 
 const SettingsForm: FC = () => {
   const [encodingSpeed, setEncodingSpeed] = useState('medium');
   const [segmentSize, setSegmentSize] = useState('6');
   const [framerate, setFramerate] = useState('25');
+  const [streams, setStreams] = useState([StreamQuality.MOBILE_240P, StreamQuality.HD_720P]);
 
   return (
     <>
-    <form className="col">
-      <Select
+    <div className="col">
+      <SelectInput
         id="encoding-speed"
         label="Encoding speed"
         value={encodingSpeed}
@@ -20,7 +23,7 @@ const SettingsForm: FC = () => {
           {value: 'fast', label: 'Fast'},
         ]}
       />
-      <Select
+      <SelectInput
         id="segment-size"
         label="Segments size"
         value={segmentSize}
@@ -33,7 +36,7 @@ const SettingsForm: FC = () => {
           {value: '10', label: '10'},
         ]}
       />
-      <Select
+      <SelectInput
         id="framerate"
         label="Framerate"
         value={framerate}
@@ -47,7 +50,13 @@ const SettingsForm: FC = () => {
           {value: '120', label: '120'},
         ]}
       />
-    </form>
+    </div>
+    <div className="col">
+      <StreamsSelector
+        value={streams}
+        onChange={v => setStreams(v)}
+      />
+    </div>
     </>
   );
 };

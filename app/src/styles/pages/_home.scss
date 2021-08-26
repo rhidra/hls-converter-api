@@ -1,195 +1,143 @@
-.main-layout {
-  min-height: 100vh;
-  overflow: hidden;
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  nav.header {
-    width: 100vw;
-    min-height: 6rem;
+  article {
+    max-width: 900px;
+    transform: translateY(-45%);
+    width: 100%;
+    transition: 1000ms ease-out transform;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
 
-    h1.title {
-      font-weight: 300;
-      font-size: 24px;
-      margin: 0 2rem;
-      color: $grey-8;
+    &.file-selected {
+      transform: translateY(-300px);
     }
-
-    a.call-to-action {
-      background: $red-3;
-      padding: .75rem 4rem;
-      font-size: 1.2rem;
+  
+    .dropdown {
+      height: 500px;
+      width: 100%;
+      background: $grey-8;
       border-radius: 30px;
-      margin-right: 2rem;
-      color: $grey-1;
-      box-shadow: $shadow-4;
-      transition: 150ms linear background;
+      box-shadow: $shadow-5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 
+        150ms linear background, 
+        150ms linear color,
+        1000ms ease-in-out height;
+      color: $grey-3;
+      z-index: 4;
 
       &:hover {
-        cursor: pointer;
-        background: $red-4;
+        background: $grey-9;
+        color: $grey-1;
       }
-    }
-  }
-
-  header {
-    background: 
-      linear-gradient(0deg, rgba($red-3, 0.4), rgba($red-3, 0.4)), 
-      radial-gradient(58.65% 75.06% at 100% 0%, #F42E2B 7.81%, rgba(251, 187, 186, 0) 100%), 
-      radial-gradient(73.57% 67.13% at 0% 76.22%, #F16427 14.58%, rgba(240, 108, 51, 0) 91.15%);
-    min-height: 50vh;
-    clip-path: ellipse(75% 100% at center 0);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .slogan {
-      font-size: 1.2rem;
-      margin-top: 2rem;
-    }
-  }
-
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    article {
-      max-width: 700px;
-      transform: translateY(-45%);
-      width: 100%;
-      transition: 1000ms ease-out transform;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
 
       &.file-selected {
-        transform: translateY(-300px);
-      }
-    
-      .dropdown {
-        height: 500px;
-        width: 100%;
-        background: $grey-8;
-        border-radius: 30px;
-        box-shadow: $shadow-5;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: 
-          150ms linear background, 
-          150ms linear color,
-          1000ms ease-in-out height;
-        color: $grey-3;
-        z-index: 4;
-
+        cursor: inherit;
+        height: 130px;
         &:hover {
-          background: $grey-9;
-          color: $grey-1;
+          background: $grey-8;
+          color: $grey-3;
+        }
+      }
+
+      .inner {
+        width: calc(100% - 50px);
+        height: calc(100% - 50px);
+        border: 8px dashed $grey-3;
+        border-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        transition: 500ms linear opacity;
+        z-index: 5;
+
+        svg {
+          font-size: 130px;
+          margin-bottom: 2rem;
         }
 
         &.file-selected {
-          cursor: inherit;
-          height: 130px;
-          &:hover {
-            background: $grey-8;
-            color: $grey-3;
-          }
+          opacity: 0;
+          position: absolute;
+          pointer-events: none;
         }
+      }
 
-        .inner {
-          width: calc(100% - 50px);
-          height: calc(100% - 50px);
-          border: 8px dashed $grey-3;
-          border-radius: 30px;
+      .file {
+        z-index: 10;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 3rem;
+        color: $grey-2;
+
+        .file-col {
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          font-size: 1.5rem;
-          transition: 500ms linear opacity;
-          z-index: 5;
-
-          svg {
-            font-size: 130px;
-            margin-bottom: 2rem;
-          }
-
-          &.file-selected {
-            opacity: 0;
-            position: absolute;
-            pointer-events: none;
-          }
         }
 
-        .file {
-          z-index: 10;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          width: 100%;
-          padding: 0 3rem;
-          color: $grey-2;
+        .size {
+          color: rgba($grey-5, .8);
+        }
 
-          .file-col {
-            display: flex;
-            flex-direction: column;
+        button {
+          height: 50px;
+          width: 50px;
+          cursor: pointer;
+          border-radius: 5px;
+          transition: 150ms linear background;
+
+          &:hover {
+            background: rgba($red-3, 0.4);
           }
 
-          .size {
-            color: rgba($grey-5, .8);
+          &:active {
+            background: rgba($red-3, 0.7);
           }
 
-          button {
-            height: 50px;
-            width: 50px;
-            cursor: pointer;
-            border-radius: 50%;
-            transition: 150ms linear background;
-
-            &:hover {
-              background: rgba($red-3, 0.4);
-            }
-
-            &:active {
-              background: rgba($red-3, 0.7);
-            }
-
-            svg {
-              font-size: 20px;
-              color: $grey-2;
-            }
+          svg {
+            font-size: 20px;
+            color: $grey-2;
           }
         }
       }
+    }
 
-      .settings {
-        height: 0;
-        background: $grey-1;
-        position: relative;
-        top: -30px;
-        width: 95%;
-        border-radius: 30px;
-        z-index: -3;
-        box-shadow: $shadow-5;
-        box-sizing: border-box;
-        transition: 1000ms ease height, 100ms linear padding;
-        overflow: hidden;
-        display: flex;
-        padding: 0 1.5rem;
-        
-        &.file-selected {
-          height: 400px;
-          padding-top: calc(30px + 1rem);
-        }
+    .settings {
+      height: 0;
+      background: $grey-1;
+      position: relative;
+      top: -30px;
+      width: 95%;
+      border-radius: 30px;
+      z-index: -3;
+      box-shadow: $shadow-5;
+      box-sizing: border-box;
+      transition: 1000ms ease height, 100ms linear padding;
+      overflow: hidden;
+      display: flex;
+      padding: 0 1.5rem;
+      
+      &.file-selected {
+        height: 400px;
+        padding-top: calc(30px + 1rem);
+      }
 
-        .col {
-          width: 50%;  
-        }
+      .col {
+        width: 50%;
+        &:first-child { margin-right: .5rem; }
+        &:last-child { margin-left: .5rem; }
       }
     }
   }

@@ -1,0 +1,43 @@
+.streams-selector {
+  .stream-row {
+    display: flex;
+
+    .select {
+      flex-grow: 1;
+      margin-bottom: .5rem;
+    }
+
+    button {
+      width: 40px;
+      height: 40px;
+      border-radius: 5px;
+      background: $grey-2;
+      margin-left: .5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 150ms linear background;
+
+      &:hover {
+        background: rgba($grey-3, .8);
+      }
+      &:active {
+        background: $grey-3;
+      }
+      svg {
+        font-size: 20px;
+      }
+      
+      &.remove {
+        background: transparent;
+        &:hover {
+          background: rgba($red-3, 0.2);
+        }
+        &:active {
+          background: rgba($red-3, 0.4);
+        }
+      }
+    }
+  }
+}

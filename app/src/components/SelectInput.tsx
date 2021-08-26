@@ -12,18 +12,18 @@ type Props = {
   }[];
 };
 
-const Select: FC<Props> = ({onChange, value, options, id, label}) => {
+const SelectInput: FC<Props> = ({onChange, value, options, id, label}) => {
 
   return (
     <div className="select">
       {label &&
         <label htmlFor={id}>{label}</label>
       }
-      
+
       <div className="select-box">
         <select name={id} id={id} value={value} onChange={v => onChange(v.target.value)}>
           {options.map(({label, value}) => (
-            <option value={value}>{label}</option>
+            <option key={value} value={value}>{label}</option>
           ))}
         </select>
 
@@ -35,4 +35,4 @@ const Select: FC<Props> = ({onChange, value, options, id, label}) => {
   );
 }
 
-export default Select;
+export default SelectInput;
