@@ -1,10 +1,27 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {FaCloudUploadAlt, FaTrashAlt} from "react-icons/fa"
 import { formatSize } from '../utils/utils';
 
 export default function Home() {
   const input = useRef(null);
+  const dropdown = useRef(null);
   const [file, setFile] = useState<File>();
+
+  useEffect(() => {
+    if (dropdown?.current) {
+      // dragover and dragenter events need to have 'preventDefault' called
+      // in order for the 'drop' event to register. 
+      // See: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Drag_operations#droptargets
+      (dropdown.current as any).ondragover = (dropdown.current as any).ondragenter = (event: Event) => {
+        event.preventDefault();
+      };
+
+      (dropdown.current as any).ondrop = (event: DragEvent) => {
+        setFile(event.dataTransfer?.files[0]);
+        event.preventDefault();
+      };
+    }
+  })
 
   return (
     <div className="main-layout">
@@ -27,7 +44,11 @@ export default function Home() {
           onChange={(e: any) => setFile(e.target.files[0])}
           multiple={false}
         />
-        <section className={`dropdown ${file ? 'file-selected' : ''}`} onClick={() => file ? null : (input?.current as any).click()}>
+        <section 
+          ref={dropdown}
+          className={`dropdown ${file ? 'file-selected' : ''}`} 
+          onClick={() => file ? null : (input?.current as any).click()}>
+
           <div className={`inner ${file ? 'file-selected' : ''}`}>
             <FaCloudUploadAlt/>
             <span>Drop a video !</span>
@@ -43,7 +64,7 @@ export default function Home() {
                   {formatSize(file.size)}
                 </span>
               </div>
-              <button>
+              <button onClick={() => setFile(undefined)}>
                 <FaTrashAlt/>
               </button>
             </div>
