@@ -25,11 +25,11 @@ export async function getDB() {
 }
 
 export async function setupDB() {
+  // DROP TABLE IF EXISTS StreamsQuality;
+  // DROP TABLE IF EXISTS Videos;
   await db.exec(`
     PRAGMA foreign_keys = ON;
 
-    DROP TABLE IF EXISTS StreamsQuality;
-    DROP TABLE IF EXISTS Videos;
 
     CREATE TABLE IF NOT EXISTS Videos (
       uploadId TEXT PRIMARY KEY,
