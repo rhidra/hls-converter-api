@@ -1,0 +1,61 @@
+# Before starting first, to make nginx starts in HTTPS, you need to run init-letsencrypt.sh
+
+version: "3"
+
+services:
+  # Main node/express REST server
+  api:
+    container_name: api
+    restart: always
+    build: 
+      context: .
+      dockerfile: ./api/api.dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./api/data:/usr/api/data
+
+  # Video encoder
+  encoder:
+    container_name: encoder
+    restart: always
+    build: 
+      context: .
+      dockerfile: ./api/encoder.dockerfile
+    volumes: 
+      - ./api/data:/usr/api/data
+    depends_on:
+      - api
+
+  # End point of the server
+  nginx:
+    container_name: nginx
+    restart: always
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+      - ./public:/var/public
+    depends_on:
+      - api
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  # Automate certificate renewal
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - nginx
+    # Renew the certificate every 12h
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+volumes:
+  certbot-etc:
+  certbot-var:

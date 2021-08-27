@@ -8,6 +8,7 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",
+    "startEncoder": "node dist/encoder/index.js",
     "devApi": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
     "devEncoder": "concurrently \"tsc -w\" \"nodemon dist/encoder/index.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
