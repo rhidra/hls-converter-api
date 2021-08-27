@@ -1,9 +1,15 @@
 import { FC } from "react";
 
-const Loader: FC = () => {
+type Props = {
+  label?: string;
+};
+
+const Loader: FC<Props> = ({label}) => {
   return (
     <>
-    <span className="loader-label">Loading</span>
+    <span className="loader-label">
+      {label ?? 'Loading'}
+    </span>
 
     <div className="loader">
       <span></span>
