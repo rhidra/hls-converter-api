@@ -24,7 +24,7 @@ const UploadState: FC<Props> = ({status}) => {
   return (
     <main className="upload-state">
       <div>
-        <Loader label={mapStatusToLabel(status)}/>
+        <Loader label={mapStatusToLabel(status)} sublabel={status !== VideoStatus.DONE ? 'This may take a few minutes' : undefined}/>
       </div>
     </main>
   );
