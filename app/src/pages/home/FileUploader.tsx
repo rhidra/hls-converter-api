@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { FaCloudUploadAlt, FaTrashAlt } from "react-icons/fa";
 import { EncodingSettings, EncodingSpeed, StreamQuality } from "../../types";
+import { IoMdClose } from 'react-icons/io';
 import { formatSize } from "../../utils/utils";
 import SettingsForm from "./SettingsForm";
 
@@ -75,7 +76,7 @@ const FileUploader: FC<Props> = ({ onSubmit }) => {
                 </span>
               </div>
               <button onClick={() => setFile(undefined)}>
-                <FaTrashAlt/>
+                <IoMdClose/>
               </button>
             </div>
           }

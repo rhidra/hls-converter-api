@@ -14,16 +14,34 @@ main.error {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 20%;
     height: 60%;
+    min-height: 400px;
+
+    transform: translateY(-300px);
+    @include laptop { transform: translateY(-250px); }
+    @include tablet { transform: translateY(-220px); }
+    @include mobile-lg { transform: translateY(-150px); }
+
+    @include tablet {
+      max-width: none;
+      border-radius: 0;
+    }
   }
 
   .error-title {
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
+    text-align: center;
+    @include tablet {
+      font-size: 2rem;
+    }
   }
 
   .error-message {
     font-size: 1.2rem;
+    text-align: center;
+    @include tablet {
+      font-size: 1rem;
+    }
   }
 }

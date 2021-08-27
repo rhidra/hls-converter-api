@@ -57,9 +57,17 @@
 .loader-label {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
+  text-align: center;
+  @include tablet {
+    font-size: 2rem;
+  }
 }
 
 .loader-sublabel {
   font-size: 1.2rem;
   margin-bottom: 2rem;
+  text-align: center;
+  @include tablet {
+    font-size: 1rem;
+  }
 }

@@ -6,14 +6,23 @@
     width: 100vw;
     min-height: 6rem;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    @include mobile-lg {
+      flex-direction: column;
+    }
 
     h1.title {
       font-weight: 300;
       font-size: 24px;
       margin: 0 2rem;
       color: $grey-8;
+
+      @include mobile-lg {
+        margin: 1rem;
+      }
     }
 
     a.call-to-action {
@@ -38,12 +47,24 @@
       linear-gradient(0deg, rgba($red-3, 0.4), rgba($red-3, 0.4)), 
       radial-gradient(58.65% 75.06% at 100% 0%, #F42E2B 7.81%, rgba(251, 187, 186, 0) 100%), 
       radial-gradient(73.57% 67.13% at 0% 76.22%, #F16427 14.58%, rgba(240, 108, 51, 0) 91.15%);
-    min-height: 50vh;
+    min-height: 500px;
     clip-path: ellipse(75% 100% at center 0);
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @include laptop {
+      min-height: 450px;
+    }
+
+    @include tablet {
+      min-height: 420px;
+    }
+
+    @include mobile-lg {
+      min-height: 350px;
+    }
 
     .slogan {
       font-size: 1.2rem;

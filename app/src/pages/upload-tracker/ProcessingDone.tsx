@@ -8,7 +8,7 @@ const ProcessingDone: FC<Props> = ({onDownload}) => {
   return (
     <main className="processing-done">
       <div>
-        <span className="loader-label">Your HLS stream is ready !</span>
+        <span className="loader-label">Your HLS stream is ready&nbsp;!</span>
 
         <div className="download-button">
           <button onClick={() => onDownload()}>

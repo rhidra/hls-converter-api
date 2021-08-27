@@ -12,8 +12,15 @@ main.file-uploader {
     flex-direction: column;
     align-items: center;
 
+    @include mobile-lg {
+      transform: translateY(-30%);
+    }
+
     &.file-selected {
       transform: translateY(-300px);
+      @include laptop { transform: translateY(-250px); }
+      @include tablet { transform: translateY(-220px); }
+      @include mobile-lg { transform: translateY(-150px); }
     }
   
     .dropdown {
@@ -32,6 +39,10 @@ main.file-uploader {
         1000ms ease-in-out height;
       color: $grey-3;
       z-index: 4;
+
+      @include mobile-lg {
+        border-radius: 0;
+      }
 
       &:hover {
         background: $grey-9;
@@ -82,6 +93,12 @@ main.file-uploader {
         padding: 0 3rem;
         color: $grey-2;
 
+        @include mobile-lg {
+          padding: 0 1.5rem;
+          padding-bottom: 1rem;
+          flex-direction: column-reverse;
+        }
+
         .file-col {
           display: flex;
           flex-direction: column;
@@ -127,6 +144,15 @@ main.file-uploader {
       transition: 1000ms linear max-height, 100ms linear padding;
       overflow: hidden;
       padding: 0 1.5rem;
+
+      @include tablet {
+        width: 97%;
+      }
+
+      @include mobile-lg {
+        border-radius: 0;
+        width: 100%;
+      }
 
       &.file-selected {
         max-height: 600px;
