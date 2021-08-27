@@ -7,17 +7,17 @@ import { VideoStatus } from "../../types";
 import { removeExtension } from "../../utils/utils";
 import ProcessingDone from "../home/ProcessingDone";
 
+const api = new ApiProxy();
+
 const UploadTrack: FC = () => {
   const [status, setStatus] = useState<VideoStatus>(VideoStatus.PENDING);
   const {uploadId, filename} = useParams<{uploadId: string, filename: string}>();
 
-  useEffect(() => { ( async () => {
-    const api = new ApiProxy();
-
+  useEffect(() => {
     // Wait for the encoding to be done...
-    let done = false;
-    while (!done) {
-      const {status, message} = await api.checkStatus(uploadId);
+    let timer: any;
+    timer = setInterval(async () => {
+      const {status} = await api.checkStatus(uploadId);
 
       if (status === 'ENCODING') {
         setStatus(VideoStatus.ENCODING);
@@ -26,14 +26,16 @@ const UploadTrack: FC = () => {
       }
 
       if (status === 'DONE') {
-        done = true;
+        clearInterval(timer);
         setStatus(VideoStatus.DONE);
-      } else {
-        await new Promise<void>(r => setTimeout(() => r(), 1000))
+        downloadFile();
       }
-    }
+    }, 1000);
 
-    // Download the file
+    return () => clearInterval(timer);
+  }, []);
+
+  async function downloadFile() {
     const blob = await api.downloadFile(uploadId);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -42,7 +44,7 @@ const UploadTrack: FC = () => {
     document.body.appendChild(a);
     a.click();    
     a.remove();
-  })()}, []);
+  }
 
   return (
     <div className="main-layout">
