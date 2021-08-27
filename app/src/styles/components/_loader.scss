@@ -22,34 +22,36 @@
    left:60px;
    animation: bounce2 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
    animation-delay: 0s;
-   background: #ff756f;
+   background: $red-5;
 }
 .loader span:nth-child(2) {
    left:20px;
    animation: bounce2 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
    animation-delay: .2s;
-   background: #ffde6f;
+   background: $red-5;
 }
 .loader span:nth-child(3) {
    left:-20px;
    animation: bounce2 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
    animation-delay: .4s;
-   background: #01de6f;
+   background: $red-5;
 }
 .loader span:nth-child(4) {
    left: -60px;
    animation: bounce2 1s cubic-bezier(0.04, 0.35, 0, 1) infinite;
    animation-delay: .6s;
-   background: #6f75ff;
+   background: $red-5;
 }
 
 @keyframes bounce2 {
-   0%, 75%, 100% {
-       transform: translateY(0px);
-   }
-   25% {
-       transform: translateY(-30px);
-   }
+  0%, 75%, 100% {
+    transform: translateY(0px);
+    background: $red-5;
+  }
+  25% {
+    transform: translateY(-30px);
+    background: #fa9333;
+  }
 }
 
 .loader-label {
