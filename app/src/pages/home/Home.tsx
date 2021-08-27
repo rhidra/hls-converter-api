@@ -4,12 +4,15 @@ import { EncodingSettings, VideoStatus } from '../../types';
 import FileUploader from './FileUploader';
 import UploadState from '../../components/UploadState';
 import ApiProxy from '../../lib/ApiProxy';
-import ProcessingDone from './ProcessingDone';
 import { useHistory } from 'react-router-dom';
+import Error from '../../components/Error';
 
 export default function Home() {
   const [status, setStatus] = useState<VideoStatus>();
   const history = useHistory();
+
+  const [error, setError] = useState();
+  const [errorMsg, setErrorMsg] = useState();
 
   async function handleSubmit(file: File, settings: EncodingSettings) {
     setStatus(VideoStatus.NOT_UPLOADED);
@@ -17,12 +20,22 @@ export default function Home() {
 
     // Request an upload ID with the encoding settings
     const uploadId = await api.requestUploadId(settings);
+
+    if (!uploadId) {
+      setStatus(VideoStatus.ERROR);
+      return;
+    }
     
     // Upload the video file
-    const ok = await api.uploadVideoFile(uploadId, file);
+    const res = await api.uploadVideoFile(uploadId, file);
 
-    if (ok) {
+    if (res.ok) {
       history.push(`/status/${file.name}/${uploadId}`);
+    } else {
+      setStatus(VideoStatus.ERROR);
+      const {error, message} = await res.json();
+      setError(error);
+      setErrorMsg(message);
     }
   }
 
@@ -34,8 +47,12 @@ export default function Home() {
         <FileUploader onSubmit={(f, s) => handleSubmit(f, s)}/>
       }
 
-      {status !== undefined && status !== VideoStatus.DONE && 
+      {status !== undefined && status !== VideoStatus.DONE && status !== VideoStatus.ERROR && 
         <UploadState status={status}/>
+      }
+
+      {status === VideoStatus.ERROR &&
+        <Error error={error} message={errorMsg}/>
       }
     </div>
   );

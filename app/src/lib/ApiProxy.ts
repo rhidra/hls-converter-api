@@ -31,7 +31,7 @@ export default class ApiProxy {
     body.append('media', file);
 
     const res = await fetch(`${this.baseUrl}/api/upload/${uploadId}`,  {method: 'POST', body});
-    return res.ok;
+    return res;
   }
 
   async checkStatus(uploadId: string) {
