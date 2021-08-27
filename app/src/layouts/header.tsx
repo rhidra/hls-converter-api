@@ -1,10 +1,13 @@
 import { FC } from "react"
+import { Link } from "react-router-dom";
 
 const Header: FC = () => {
   return (
     <header>
       <nav className="header">
-        <h1 className="title">HLS Converter</h1>
+        <a href="/">
+          <h1 className="title">HLS Converter</h1>
+        </a>
         <a className="call-to-action">Access the API</a>
       </nav>
 
