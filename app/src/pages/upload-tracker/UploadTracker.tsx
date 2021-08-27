@@ -9,7 +9,7 @@ import ProcessingDone from "../home/ProcessingDone";
 
 const api = new ApiProxy();
 
-const UploadTrack: FC = () => {
+const UploadTracker: FC = () => {
   const [status, setStatus] = useState<VideoStatus>(VideoStatus.PENDING);
   const {uploadId, filename} = useParams<{uploadId: string, filename: string}>();
 
@@ -55,10 +55,10 @@ const UploadTrack: FC = () => {
       }
 
       {status === VideoStatus.DONE &&
-        <ProcessingDone/>
+        <ProcessingDone onDownload={() => downloadFile()}/>
       }
     </div>
   );
 };
 
-export default UploadTrack;
+export default UploadTracker;

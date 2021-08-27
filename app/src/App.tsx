@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/home/Home';
-import UploadTrack from './pages/upload-track/UploadTrack';
+import UploadTracker from './pages/upload-tracker/UploadTracker';
 
 export default function App() {
   return (
     <Router>
       <Switch>
         <Route path="/status/:filename/:uploadId">
-          <UploadTrack/>
+          <UploadTracker/>
         </Route>
 
         <Route path="/">

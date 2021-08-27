@@ -1,4 +1,4 @@
-main.upload-state {
+main.processing-done {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,5 +16,29 @@ main.upload-state {
     position: absolute;
     top: 20%;
     height: 60%;
+  }
+
+  .download-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    button {
+      background: $grey-2;
+      width: 100%;
+      max-width: 500px;
+      padding: 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 150ms linear all;
+      font-size: 1.2rem;
+      color: $grey-8;
+      margin: 1rem 0 2rem;
+
+      &:hover {
+        color: $grey-1;
+        background: $red-5;
+      }
+    }
   }
 }
