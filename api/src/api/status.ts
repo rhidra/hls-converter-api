@@ -46,6 +46,7 @@ router.get('/status/:uploadId', async (req, res) => {
         message: 'Your file is currently being encoded.',
       });
     case VideoStatus.DONE:
+    case VideoStatus.DOWNLOADED:
       return res.json({
         status: 'DONE',
         message: 'Your file is encoded and is waiting for download.',
