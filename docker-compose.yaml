@@ -13,7 +13,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./api/data:/usr/api/data
+      - ./data:/usr/api/data
 
   # Video encoder
   encoder:
@@ -23,7 +23,7 @@ services:
       context: ./api
       dockerfile: ./encoder.dockerfile
     volumes: 
-      - ./api/data:/usr/api/data
+      - ./data:/usr/api/data
     depends_on:
       - api
   
