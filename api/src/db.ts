@@ -17,7 +17,7 @@ export async function getDB() {
     return db;
   } else {
     db = await open({
-      filename: path.join(__dirname, "videos.db"),
+      filename: path.join(__dirname, "../data/videos.db"),
       driver: sqlite3.Database
     });
     return db;
