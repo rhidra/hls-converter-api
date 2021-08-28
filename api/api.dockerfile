@@ -14,8 +14,9 @@ RUN npm install
 # Build the server
 RUN npm run build
 
-# Remove source files
+# Remove source files and dev dependancies
 RUN rm -rf ./src
+RUN npm prune --production
 
 # Start the server
-CMD ["npm", "start"]
+CMD ["node", "dist/index.js"]

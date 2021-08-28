@@ -8,8 +8,8 @@ services:
     container_name: api
     restart: always
     build: 
-      context: .
-      dockerfile: ./api/api.dockerfile
+      context: ./api
+      dockerfile: ./api.dockerfile
     ports:
       - "8080:8080"
     volumes:
@@ -20,12 +20,22 @@ services:
     container_name: encoder
     restart: always
     build: 
-      context: .
-      dockerfile: ./api/encoder.dockerfile
+      context: ./api
+      dockerfile: ./encoder.dockerfile
     volumes: 
       - ./api/data:/usr/api/data
     depends_on:
       - api
+  
+  # Frontend React app, served by NGINX on port 80
+  app:
+    container_name: app
+    restart: always
+    build:
+      context: ./app
+      dockerfile: ./app.dockerfile
+    ports: 
+      - "3000:80"
 
   # End point of the server
   nginx:

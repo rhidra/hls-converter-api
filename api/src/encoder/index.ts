@@ -10,6 +10,8 @@ let isProcessing = false;
 // Main function, filesystem watcher
 async function runServer() {
   // File system watcher
+  fs.mkdirSync('data/mp4', {recursive: true});
+  fs.mkdirSync('data/hls', {recursive: true});
   fs.watch('data/mp4', async (eventType, filename) => {
     if (eventType !== 'rename') {
       return;
