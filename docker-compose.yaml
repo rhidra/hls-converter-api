@@ -34,8 +34,8 @@ services:
     build:
       context: ./app
       dockerfile: ./app.dockerfile
-    ports: 
-      - "3000:80"
+    # ports: 
+    #   - "3000:80"
 
   # End point of the server
   nginx:
