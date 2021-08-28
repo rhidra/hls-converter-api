@@ -27,4 +27,4 @@ RUN yarn install --production
 # Using a nginx server
 FROM nginx:1.21.1
 COPY --from=build-stage /usr/app/build /usr/share/nginx/html
-COPY --from=build-stage /usr/app/nginx /etc/nginx/conf.d
+COPY --from=build-stage /usr/app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
