@@ -34,8 +34,6 @@ services:
     build:
       context: ./app
       dockerfile: ./app.dockerfile
-    # ports: 
-    #   - "3000:80"
 
   # End point of the server
   nginx:
@@ -49,7 +47,6 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-      # - ./public:/var/public
     depends_on:
       - api
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
