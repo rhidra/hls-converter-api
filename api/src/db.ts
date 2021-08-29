@@ -30,7 +30,6 @@ export async function setupDB() {
   await db.exec(`
     PRAGMA foreign_keys = ON;
 
-
     CREATE TABLE IF NOT EXISTS Videos (
       uploadId TEXT PRIMARY KEY,
       originalName TEXT,
@@ -47,6 +46,12 @@ export async function setupDB() {
       quality TINYINT NOT NULL DEFAULT ${StreamQuality.MOBILE_360P},
       FOREIGN KEY(uploadId) REFERENCES Videos(uploadId) ON DELETE CASCADE,
       PRIMARY KEY(uploadId, stream)
+    );
+
+    CREATE TABLE IF NOT EXISTS Ips (
+      id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      ip TEXT NOT NULL,
+      date TEXT NOT NULL
     );
   `);
 }

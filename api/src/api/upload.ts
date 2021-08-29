@@ -6,6 +6,7 @@ import {getExtension} from '../utils';
 import fs from 'fs';
 import bodyParser from 'body-parser';
 import { EncodingSpeed, Video, VideoStatus } from '../types';
+import { limitRequestPerDay } from '../middleware/auth';
 
 const router = Router();
 const upload = multer({});
@@ -53,6 +54,10 @@ router.post('/request', bodyParser.json(), async (req, res) => {
 
   res.json({uploadId});
 });
+
+// Filter to use only Rapid API or frontend requests
+// All other users are limited to one upload a day (even a failed one).
+router.use('/upload', limitRequestPerDay(1));
 
 /**
  * POST /api/upload/:uploadId

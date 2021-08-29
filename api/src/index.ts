@@ -27,20 +27,6 @@ sqlite3.verbose();
   // Log the HTTP request
   app.use(morgan('dev'));
 
-  // Filter only Rapid API or frontend requests
-  app.use((req, res, next) => {
-    console.log(req.ip);
-    console.log(req.headers['x-forwarded-for'])
-    if (process.env.NODE_ENV === 'development') {
-      next();
-    } else if (req.headers['X-RapidAPI-Proxy-Secret'] === process.env.RAPID_API_KEY) {
-      next();
-    } else {
-      // res.sendStatus(403);
-      next();
-    }
-  })
-
   // CORS
   app.use(cors())
 
@@ -48,7 +34,8 @@ sqlite3.verbose();
     try {
       const videos = await db.all(`SELECT * FROM Videos;`);
       const streams = await db.all(`SELECT * FROM StreamsQuality;`);
-      res.send({videos, streams});
+      const ips = await db.all(`SELECT * FROM Ips;`);
+      res.send({videos, streams, ips});
     } catch (err) {
       res.status(500).send('DB error: Unable to select columns of the table');
     }

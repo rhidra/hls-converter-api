@@ -30,6 +30,8 @@ router.get('/cleanup', async (req, res) => {
     OR status = ${VideoStatus.ERROR}
   `);
 
+  await db.run(`DELETE FROM Ips`);
+
   res.sendStatus(200);
 });
 
