@@ -1,8 +1,7 @@
 import { EncodingSettings } from "../types";
 
 export default class ApiProxy {
-  // baseUrl = 'http://localhost:8080';
-  baseUrl = 'https://hls-converter.com';
+  baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : 'https://hls-converter.com';
 
   async requestUploadId(settings: EncodingSettings) {
     try {
