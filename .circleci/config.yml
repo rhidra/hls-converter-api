@@ -7,7 +7,7 @@ jobs:
       - image: arvindr226/alpine-ssh
     steps:
       - checkout
-      - run: ssh ubuntu@$hls-converter.com -i  "ls"
+      - run: ssh ubuntu@$hls-converter.com -i  "pwd && ls"
 
 # Orchestrate our job run sequence
 workflows:
