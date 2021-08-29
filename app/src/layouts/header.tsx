@@ -10,7 +10,9 @@ const Header: FC = () => {
             HLS Converter
           </h1>
         </a>
-        <a className="call-to-action">Access the API</a>
+        <a href="https://rapidapi.com/rhidra/api/hls-converter" target="_blank" className="call-to-action" rel="noreferrer">
+          Access the API
+        </a>
       </nav>
 
       <div className="slogan">
