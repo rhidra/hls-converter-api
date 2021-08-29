@@ -20,12 +20,19 @@
 
     h1.title {
       font-weight: 300;
-      font-size: 24px;
+      font-size: 30px;
       margin: 0 2rem;
       color: $grey-8;
+      display: flex;
+      align-items: center;
 
       @include mobile-lg {
         margin: 1rem;
+      }
+
+      img {
+        width: 50px;
+        margin-right: .5rem;
       }
     }
 
