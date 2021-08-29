@@ -7,7 +7,12 @@ jobs:
       - image: arvindr226/alpine-ssh
     steps:
       - checkout
-      - run: ssh -oStrictHostKeyChecking=no ubuntu@hls-converter.com "pwd && ls"
+      - run: >
+        ssh -oStrictHostKeyChecking=no ubuntu@hls-converter.com "
+        cd hls-converter-api; 
+        git pull;
+        docker-compose build;
+        docker-compose up -d;"
 
 # Orchestrate our job run sequence
 workflows:
