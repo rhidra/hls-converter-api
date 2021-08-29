@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { FaCloudUploadAlt, FaTrashAlt } from "react-icons/fa";
+import { FaCloudUploadAlt } from "react-icons/fa";
 import { EncodingSettings, EncodingSpeed, StreamQuality } from "../../types";
 import { IoMdClose } from 'react-icons/io';
 import { formatSize } from "../../utils/utils";

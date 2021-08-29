@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Error from "../../components/Error";
 import UploadState from "../../components/UploadState";
@@ -14,7 +14,23 @@ const UploadTracker: FC = () => {
   const [status, setStatus] = useState<VideoStatus>(VideoStatus.PENDING);
   const {uploadId, filename} = useParams<{uploadId: string, filename: string}>();
 
+  const downloadFile = useCallback(async () => {
+    if (!uploadId || !filename) { return; }
+    const blob = await api.downloadFile(uploadId);
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${removeExtension(filename)}.zip`;
+    document.body.appendChild(a);
+    a.click();    
+    a.remove();
+  }, [uploadId, filename]);
+
   useEffect(() => {
+    if (!uploadId) {
+      return;
+    }
+
     // Wait for the encoding to be done...
     let timer: any;
     timer = setInterval(async () => {
@@ -37,18 +53,7 @@ const UploadTracker: FC = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
-
-  async function downloadFile() {
-    const blob = await api.downloadFile(uploadId);
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${removeExtension(filename)}.zip`;
-    document.body.appendChild(a);
-    a.click();    
-    a.remove();
-  }
+  }, [uploadId, downloadFile]);
 
   return (
     <div className="main-layout">
