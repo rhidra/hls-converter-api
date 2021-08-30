@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Header from '../../layouts/header';
+import Header from '../../layouts/Header';
 import { EncodingSettings, VideoStatus } from '../../types';
 import FileUploader from './FileUploader';
 import UploadState from '../../components/UploadState';

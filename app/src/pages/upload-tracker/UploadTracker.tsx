@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Error from "../../components/Error";
 import UploadState from "../../components/UploadState";
-import Header from "../../layouts/header";
+import Header from "../../layouts/Header";
 import ApiProxy from "../../lib/ApiProxy";
 import { VideoStatus } from "../../types";
 import { removeExtension } from "../../utils/utils";
