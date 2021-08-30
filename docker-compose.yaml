@@ -10,8 +10,6 @@ services:
     build: 
       context: ./api
       dockerfile: ./api.dockerfile
-    ports:
-      - "8080:8080"
     volumes:
       - ./api/data:/usr/api/data
 
