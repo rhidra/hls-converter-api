@@ -49,7 +49,7 @@ export async function setupDB() {
     );
 
     CREATE TABLE IF NOT EXISTS Ips (
-      id INT PRIMARY KEY AUTOINCREMENT,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       ip TEXT NOT NULL,
       date TEXT NOT NULL
     );
