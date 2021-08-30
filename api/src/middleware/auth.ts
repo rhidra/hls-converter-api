@@ -4,7 +4,7 @@ import { getDB } from "../db";
 
 // Middleware to limit the number of times a route is accessed per day
 // We compare IP addresses, it may not be secure enough though
-export function limitRequestPerDay(reqPerDay: number) {
+export function limitRequestPerDay() {
   return async (req: Request, res: Response, next: NextFunction) => {
     if (process.env.NODE_ENV === 'development') {
       next();

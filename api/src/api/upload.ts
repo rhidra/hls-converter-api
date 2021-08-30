@@ -57,7 +57,7 @@ router.post('/request', bodyParser.json(), async (req, res) => {
 
 // Filter to use only Rapid API or frontend requests
 // All other users are limited to one upload a day (even a failed one).
-router.use('/upload', limitRequestPerDay(1));
+router.use('/upload', limitRequestPerDay());
 
 /**
  * POST /api/upload/:uploadId
