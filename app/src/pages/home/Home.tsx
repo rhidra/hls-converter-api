@@ -11,8 +11,8 @@ export default function Home() {
   const [status, setStatus] = useState<VideoStatus>();
   const history = useHistory();
 
-  const [error, setError] = useState();
-  const [errorMsg, setErrorMsg] = useState();
+  const [error, setError] = useState<string>();
+  const [errorMsg, setErrorMsg] = useState<string>();
 
   async function handleSubmit(file: File, settings: EncodingSettings) {
     setStatus(VideoStatus.NOT_UPLOADED);
@@ -31,6 +31,10 @@ export default function Home() {
 
     if (res.ok) {
       history.push(`/status/${file.name}/${uploadId}`);
+    } else if (res.status === 403) {
+      setStatus(VideoStatus.ERROR);
+      setError('You already used our service today !');
+      setErrorMsg('You cannot use this service more than one time a day. To use more, please check out our API.');
     } else {
       setStatus(VideoStatus.ERROR);
       const {error, message} = await res.json();
