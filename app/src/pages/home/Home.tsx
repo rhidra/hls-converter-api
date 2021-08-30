@@ -34,7 +34,7 @@ export default function Home() {
     } else if (res.status === 403) {
       setStatus(VideoStatus.ERROR);
       setError('You already used our service today !');
-      setErrorMsg('You cannot use this service more than one time a day. To use more, please check out our API.');
+      setErrorMsg('You are limited to one video file conversion per day. To use more, please check out our API.');
     } else {
       setStatus(VideoStatus.ERROR);
       const {error, message} = await res.json();
