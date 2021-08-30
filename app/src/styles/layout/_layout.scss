@@ -37,19 +37,8 @@
     }
 
     a.call-to-action {
-      background: $red-3;
-      padding: .75rem 4rem;
-      font-size: 1.2rem;
-      border-radius: 30px;
       margin-right: 2rem;
-      color: $grey-1;
-      box-shadow: $shadow-4;
-      transition: 150ms linear background;
-
-      &:hover {
-        cursor: pointer;
-        background: $red-4;
-      }
+      cursor: pointer;
     }
   }
 

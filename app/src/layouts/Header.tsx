@@ -6,12 +6,12 @@ const Header: FC = () => {
       <nav className="header">
         <a href="/">
           <h1 className="title">
-            <img className="title" src="/logo.svg" alt="logo"/>
+            <img className="title" src="/img/logo.svg" alt="logo"/>
             HLS Converter
           </h1>
         </a>
         <a href="https://rapidapi.com/rhidra/api/hls-converter" target="_blank" className="call-to-action" rel="noreferrer">
-          Access the API
+          <img src="/img/rapidapi-badge-dark.png" width="200" alt="Connect on RapidAPI"/>
         </a>
       </nav>
 

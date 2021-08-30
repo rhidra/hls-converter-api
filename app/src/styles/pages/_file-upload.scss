@@ -13,14 +13,14 @@ main.file-uploader {
     align-items: center;
 
     @include mobile-lg {
-      transform: translateY(-30%);
+      transform: translateY(-20%);
     }
 
     &.file-selected {
       transform: translateY(-300px);
       @include laptop { transform: translateY(-250px); }
       @include tablet { transform: translateY(-220px); }
-      @include mobile-lg { transform: translateY(-150px); }
+      @include mobile-lg { transform: translateY(-100px); }
     }
   
     .dropdown {
