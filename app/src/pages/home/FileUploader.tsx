@@ -4,6 +4,7 @@ import { EncodingSettings, EncodingSpeed, StreamQuality } from "../../types";
 import { IoMdClose } from 'react-icons/io';
 import { formatSize } from "../../utils/utils";
 import SettingsForm from "./SettingsForm";
+import Info from "../../components/Info";
 
 type Props = {
   onSubmit: (f: File, s: EncodingSettings) => void;
@@ -95,9 +96,7 @@ const FileUploader: FC<Props> = ({ onSubmit }) => {
         </div>
       </article>
 
-      <article className="vertical-offset">
-        Hello
-      </article>
+      <Info/>
     </main>
   );
 };
