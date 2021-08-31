@@ -2,7 +2,6 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Error from "../../components/Error";
 import UploadState from "../../components/UploadState";
-import Header from "../../layouts/Header";
 import ApiProxy from "../../lib/ApiProxy";
 import { VideoStatus } from "../../types";
 import { removeExtension } from "../../utils/utils";
@@ -56,21 +55,19 @@ const UploadTracker: FC = () => {
   }, [uploadId, downloadFile]);
 
   return (
-    <div className="main-layout">
-      <Header/>
+    <>
+    {status !== VideoStatus.DONE && status !== VideoStatus.ERROR &&
+      <UploadState status={status}/>
+    }
 
-      {status !== VideoStatus.DONE && status !== VideoStatus.ERROR &&
-        <UploadState status={status}/>
-      }
+    {status === VideoStatus.DONE &&
+      <ProcessingDone onDownload={() => downloadFile()}/>
+    }
 
-      {status === VideoStatus.DONE &&
-        <ProcessingDone onDownload={() => downloadFile()}/>
-      }
-
-      {status === VideoStatus.ERROR &&
-        <Error/>
-      }
-    </div>
+    {status === VideoStatus.ERROR &&
+      <Error/>
+    }
+    </>
   );
 };
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../../layouts/Header';
 import { EncodingSettings, VideoStatus } from '../../types';
 import FileUploader from './FileUploader';
 import UploadState from '../../components/UploadState';
@@ -44,20 +43,18 @@ export default function Home() {
   }
 
   return (
-    <div className="main-layout">
-      <Header/>
+    <>
+    {status === undefined &&
+      <FileUploader onSubmit={(f, s) => handleSubmit(f, s)}/>
+    }
 
-      {status === undefined &&
-        <FileUploader onSubmit={(f, s) => handleSubmit(f, s)}/>
-      }
+    {status !== undefined && status !== VideoStatus.DONE && status !== VideoStatus.ERROR && 
+      <UploadState status={status}/>
+    }
 
-      {status !== undefined && status !== VideoStatus.DONE && status !== VideoStatus.ERROR && 
-        <UploadState status={status}/>
-      }
-
-      {status === VideoStatus.ERROR &&
-        <Error error={error} message={errorMsg}/>
-      }
-    </div>
+    {status === VideoStatus.ERROR &&
+      <Error error={error} message={errorMsg}/>
+    }
+    </>
   );
 }
