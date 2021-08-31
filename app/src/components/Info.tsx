@@ -13,7 +13,7 @@ const Info: FC = () => {
 
       <div className="row">
         <div className="text">
-          <img src="/img/phone.svg"/>
+          <img src="/img/phone.svg" alt="Phone vector illustration"/>
 
           <strong>
             HLS-Converter.com is a tool allowing you to transcode your MP4 file into a HLS stream. 
