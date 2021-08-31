@@ -21,19 +21,25 @@ article.info-content {
     @include tablet {
       padding: 0 .5rem;
     }
+
+    img {
+      width: 400px;
+      margin: 1rem 2rem;
+      float: right;
+  
+      @include tablet-lg {
+        width: 300px;
+      }
+      
+      @include mobile-lg {
+        display: none;
+      }
+    }
   }
 
-  img {
-    width: 400px;
-    margin: 1rem 2rem;
-    float: right;
-
-    @include tablet-lg {
-      width: 300px;
-    }
-    
-    @include mobile-lg {
-      display: none;
-    }
+  .call-to-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
   }
 }

@@ -14,7 +14,7 @@ const Info: FC = () => {
       <div className="row">
         <div className="text">
           <img src="/img/phone.svg"/>
-          
+
           <strong>
             HLS-Converter.com is a tool allowing you to transcode your MP4 file into a HLS stream. 
           </strong> You can freely configure the encoding
@@ -42,6 +42,13 @@ const Info: FC = () => {
           no lag at a lower quality.
         </div>
 
+        <div className="text">
+          Check out our <strong>API</strong> and our pricing on Rapid API now !
+        </div>
+        
+        <a href="https://rapidapi.com/rhidra/api/hls-converter" target="_blank" className="call-to-action" rel="noreferrer">
+          <img src="/img/rapidapi-badge-dark.png" width="200" alt="Connect on RapidAPI"/>
+        </a>
       </div>
     </article>
   );
