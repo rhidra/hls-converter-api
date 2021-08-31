@@ -7,7 +7,7 @@ type Props = {
 
 const Error: FC<Props> = ({error, message}) => {
   return (
-    <main className="error">
+    <main className="vertical-offset error">
       <div>
         <span className="error-title">{error ?? 'An error happened'} 😢</span>
         <span className="error-message">{message ?? 'Try again, or contact the administrator'}</span>

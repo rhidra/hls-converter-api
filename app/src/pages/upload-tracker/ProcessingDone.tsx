@@ -6,7 +6,7 @@ type Props = {
 
 const ProcessingDone: FC<Props> = ({onDownload}) => {
   return (
-    <main className="processing-done">
+    <main className="vertical-offset processing-done">
       <div>
         <span className="loader-label">Your HLS stream is ready&nbsp;!</span>
 

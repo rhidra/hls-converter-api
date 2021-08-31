@@ -2,27 +2,15 @@ main.file-uploader {
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  
   article {
     max-width: 900px;
-    transform: translateY(-45%);
     width: 100%;
     transition: 1000ms ease-out transform;
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    @include mobile-lg {
-      transform: translateY(-20%);
-    }
-
-    &.file-selected {
-      transform: translateY(-300px);
-      @include laptop { transform: translateY(-250px); }
-      @include tablet { transform: translateY(-220px); }
-      @include mobile-lg { transform: translateY(-100px); }
-    }
-  
     .dropdown {
       height: 500px;
       width: 100%;

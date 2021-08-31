@@ -17,11 +17,6 @@ main.error {
     height: 60%;
     min-height: 400px;
 
-    transform: translateY(-300px);
-    @include laptop { transform: translateY(-250px); }
-    @include tablet { transform: translateY(-220px); }
-    @include mobile-lg { transform: translateY(-100px); }
-
     @include tablet {
       max-width: none;
       border-radius: 0;

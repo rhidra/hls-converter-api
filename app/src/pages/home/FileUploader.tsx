@@ -46,7 +46,7 @@ const FileUploader: FC<Props> = ({ onSubmit }) => {
   }
 
   return (
-    <main className="file-uploader">
+    <main className={`file-uploader ${file && false ? 'file-selected' : ''}`}>
       <input 
         type="file" 
         hidden 
@@ -54,7 +54,7 @@ const FileUploader: FC<Props> = ({ onSubmit }) => {
         onChange={(e: any) => setFile(e.target.files[0])}
         multiple={false}
       />
-      <article className={file ? 'file-selected' : ''}>
+      <article className={`vertical-offset ${file ? 'file-selected' : ''}`}>
         <div 
           ref={dropdown}
           className={`dropdown ${file ? 'file-selected' : ''}`} 
@@ -93,6 +93,10 @@ const FileUploader: FC<Props> = ({ onSubmit }) => {
             </button>
           </div>
         </div>
+      </article>
+
+      <article className="vertical-offset">
+        Hello
       </article>
     </main>
   );
