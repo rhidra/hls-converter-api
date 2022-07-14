@@ -1,7 +1,7 @@
 HLS Converter API
 =================
 
-## [Try it now on *hls-converter.com* !](https://hls-converter.com)
+## [Try it now on !](https://hls-converter.remyhidra.dev)
 
 ## [Check out the API !](https://rapidapi.com/rhidra/api/hls-converter/)
 
