@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(hls-converter.com www.hls-converter.com)
+domains=(hls-converter.com www.hls-converter.com hls-converter.remyhidra.dev)
 rsa_key_size=4096
 data_path="./certbot"
 email="remy.hidra@gmail.com" # Adding a valid address is strongly recommended
